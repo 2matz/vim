@@ -16,7 +16,6 @@ call plug#begin('~/.vim/plugged')
     " 检测/调试
     Plug 'folke/trouble.nvim'
     Plug 'puremourning/vimspector'       " 调试，依赖python3，以及pip3 install neovim
-
     " 语法高亮
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
