@@ -1,3 +1,5 @@
+let g:quickui_border_style = 2
+
 " 前缀键+空格：打开菜单
 nmap <silent><Leader><Space> :call quickui#menu#open('main')<cr>
 
@@ -17,44 +19,51 @@ call quickui#menu#reset()
 " 帮助 Help 
 
 call quickui#menu#install('&Application', [
-	\ [ '&Open File\ta-o', 'Telescope find_files' ],
-	\ [ 'Open &Recent ...\ta-r', 'Telescope oldfiles' ],
-	\ [ '&Save\ta-s', 'w' ],
-	\ [ '--', '' ],
-	\ [ '&Exit\ta-s', 'qa' ],
+	\ [ "&Open File\to", 'Telescope find_files' ],
+	\ [ "Open &Recent ...\tr", 'Telescope oldfiles' ],
+	\ [ "&Save\ts", 'w' ],
+	\ [ "--", '' ],
+	\ [ "&Exit\te", 'qa' ],
 \])
 
 
 call quickui#menu#install('&Find', [
-	\ [ 'Find', 'Telescope current_buffer_fuzzy_find'],
-	\ [ '&Current\tf+c', 'Telescope grep_string'],
-	\ [ '--', '' ],
-	\ [ '&Find in Files\tf+f', 'Telescope live_grep'],
-	\ [ '&Symbol\tf-s ...', 'Telescope lsp_dynamic_workspace_symbols' ],
+	\ [ "Find", 'Telescope current_buffer_fuzzy_find'],
+	\ [ "&Current\tc", 'Telescope grep_string'],
+	\ [ "--", '' ],
+	\ [ "&Find in Files\tf", 'Telescope live_grep'],
+	\ [ "&Symbol\ts ...", 'Telescope lsp_dynamic_workspace_symbols' ],
 \])
 
 call quickui#menu#install('&Goto', [
-	\ [ '&Back\tg-b', 'bp' ],
-	\ [ '&Definition\tg-d', 'Telescope lsp_definitions' ],
-	\ [ 'Diagnostics ...', 'Telescope diagnostics'],
-	\ [ 'File Location', 'execute cd expand("%:p:h") | Lexplore'],
-	\ [ 'Switch File ...', 'Telescope buffers' ],
-	\ [ '&Symbol\tg-s ...', 'Telescope lsp_document_symbols' ],
-	\ [ '&Type\tg-t', 'Telescope lsp_type_definitions' ],
-	\ [ '&Usage\tg-u', 'Telescope lsp_incoming_calls' ],
+	\ [ "&Back\tb", 'bp' ],
+	\ [ "&Definition\td", 'Telescope lsp_definitions' ],
+	\ [ "Diagnostics ...", 'Telescope diagnostics'],
+	\ [ "Switch File ...", 'Telescope buffers' ],
+	\ [ "&Symbol ...\ts", 'Telescope lsp_document_symbols' ],
+	\ [ "&Type\tt", 'Telescope lsp_type_definitions' ],
+	\ [ "&Usage\tu", 'Telescope lsp_incoming_calls' ],
+	\ [ "--", '' ],
+\])
+
+call quickui#menu#install('&Preview', [
+	\ [ "&Cursor\tc", 'lua vim.lsp.buf.hover()' ],
+	\ [ "&Definition\td", 'lua require "telescope.builtin".lsp_definitions { jump_type = "never" }' ],
+\])
+
+call quickui#menu#install('&Refactor', [
+	\ [ "&Action\ta", 'lua vim.lsp.buf.code_action()' ],
+	\ [ "&Format\tf", 'lua vim.lsp.buf.format()' ],
+	\ [ "&Rename\tr", 'lua vim.lsp.buf.rename()' ],
+	\ [ "&Rename\tr", 'lua builtin.spell_suggest' ],
 	\ [ "--", '' ],
 \])
 
 
-call quickui#menu#install('&Refactor', [
-	\ [ "&Action\tr+a", 'Lspsaga code_action' ],
-	\ [ "&Rename\tr+r", 'Lspsaga rename' ],
-	\ [ '--', '' ],
-\])
-
 
 call quickui#menu#install('&Debug', [
-	\ [ "&Continue\tF5", 'VimspectorContinue' ],
+  \ [ "&Begin", 'lua require("dapui").open()' ],
+	\ [ "&Continue\tF5", 'lua require("dap").continue()' ],
 	\ [ "&Restart\tF4", 'VimspectorRestart' ],
 	\ [ "&Stop\tF3", 'VimspectorStop' ],
 	\ [ "--", '' ],
@@ -66,31 +75,32 @@ call quickui#menu#install('&Debug', [
 \])
 
 call quickui#menu#install('G&it', [
-	\ [ '&Branches ...\ti-b', 'Telescope git_branches' ],
-	\ [ '&Commits ...\ti-c', 'Telescope git_commits' ],
-	\ [ '&Diff\ti-c', 'Gitsigns diffthis' ],
-	\ [ '&Next hunk\ti-n', 'Gitsigns next_hunk' ],
-	\ [ '&Prev hunk\ti-p', 'Gitsigns prev_hunk' ],
-	\ [ '&Reset\ti-r', 'Gitsigns reset_buffer' ],
-	\ [ '&Status ...\ti-s', 'Telescope git_status' ],
-	\ [ 'Stash ...', 'Telescope git_stash' ],
+	\ [ "&Branches ...\tb", 'Telescope git_branches' ],
+	\ [ "&Commits ...\tc", 'Telescope git_commits' ],
+	\ [ "&Diff\td", 'Gitsigns diffthis' ],
+	\ [ "&Next hunk\tn", 'Gitsigns next_hunk' ],
+	\ [ "&Prev hunk\tp", 'Gitsigns prev_hunk' ],
+	\ [ "&Reset\tr", 'Gitsigns reset_buffer' ],
+	\ [ "&Status ...\ts", 'Telescope git_status' ],
+	\ [ "Stash ...", 'Telescope git_stash' ],
 \])
 
 
 
 call quickui#menu#install('&Tools', [
-	\ [ '&Run\tt-r', 'Telescope commands' ],
-	\ [ 'Reload Settings', 'source $MYVIMRC' ],
-	\ [ '&Settings \tt-s', 'Telescope vim_options' ],
+	\ [ "&Run\tr", 'Telescope commands' ],
+	\ [ "Reload Settings", 'source $MYVIMRC' ],
+	\ [ "&Settings \ts", 'Telescope vim_options' ],
 	\ [ "--", '' ],
 \])
 
 call quickui#menu#install('&View', [
-	\ [ '&Breakpoints\tv-b', 'VimspectorBreakpoints'],
-	\ [ '&Diagnostic\tv-d', 'TroubleToggle'],
-	\ [ '&File\tv-f', 'Lexplore' ],
-	\ [ '&Git\tv-g', 'lua _lazygit_toggle()' ],
-	\ [ '&Terminal', 'ToggleTerm' ],
+	\ [ "&Breakpoints\tb", 'VimspectorBreakpoints'],
+	\ [ "&Diagnostic\td", 'TroubleToggle'],
+	\ [ "&File\tf", 'NERDTreeToggle' ],
+	\ [ "&Git\tg", 'lua _lazygit_toggle()' ],
+	\ [ "&Structure\ts", 'TagbarToggle' ],
+	\ [ "&Terminal\tt", 'ToggleTerm' ],
 	\ [ "--", '' ],
 \])
 
