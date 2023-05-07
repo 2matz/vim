@@ -6,11 +6,13 @@
 
 " 启用LSP：gopls
 lua require'lspconfig'.gopls.setup{}
-
-local capabilities = require('cmp_nvim_lsp').default_capabilities()
-    require('lspconfig')['<gopls>'].setup {
+lua <<EOF
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+require('lspconfig')['gopls'].setup {
     capabilities = capabilities
 }
+
+EOF
 " 保存文件前自动导入
 
 

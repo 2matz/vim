@@ -10,7 +10,9 @@ autocmd VimEnter * NERDTree
 " 自动在预览窗口显示行数
 autocmd User TelescopePreviewerLoaded setlocal number
 
+let g:airline#extensions#nvimlsp#enabled = 1
 
+let g:airline#extensions#lsp#enabled = 1
 
 " 美化自动填充
 lua <<EOF

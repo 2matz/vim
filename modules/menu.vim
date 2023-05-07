@@ -37,6 +37,7 @@ call quickui#menu#install('&Find', [
 
 call quickui#menu#install('&Goto', [
 	\ [ "&Back\tb", 'bp' ],
+	\ [ "&Current File\t", 'NERDTreeFind' ],
 	\ [ "&Definition\td", 'Telescope lsp_definitions' ],
 	\ [ "Diagnostics ...", 'Telescope diagnostics'],
 	\ [ "Switch File ...", 'Telescope buffers' ],
