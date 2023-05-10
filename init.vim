@@ -9,7 +9,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/plenary.nvim'         " telescope依赖项
 
     " LSP相关
-    Plug 'williamboman/mason.nvim'       " LSP、DAP
+    Plug 'williamboman/mason.nvim' , {'do': ':MasonInstall gopls' }      " LSP、DAP
     Plug 'neovim/nvim-lspconfig'         " LSP配置
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'jose-elias-alvarez/null-ls.nvim'
@@ -24,6 +24,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'leoluz/nvim-dap-go'
+    Plug 'ggandor/leap.nvim'
+    Plug 'tpope/vim-surround'
    
 
     " 语法高亮
@@ -43,6 +45,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar' " 代码结构
     Plug 'lukas-reineke/indent-blankline.nvim' " 高亮空白符
     Plug 'tpope/vim-commentary' " 注释
+    Plug 'ldelossa/litee.nvim' " 调用栈
+    Plug 'ldelossa/litee-calltree.nvim'
 
     " 标签栏
     Plug 'akinsho/bufferline.nvim'
@@ -69,6 +73,8 @@ call plug#end()
 " 基础设置
 set encoding=utf-8
 let g:netrw_keepdir= 0
+
+require('leap').add_default_mappings()
 
 " 【Mason】
 lua require("mason").setup()
@@ -101,6 +107,25 @@ require('telescope').setup{
 require("which-key").setup {
     
 }
+
+require('litee.lib').setup({
+    	tree = {
+		icon_set = "codicons"
+	},
+	panel = {
+		orientation = "left",
+			panel_size  = 30
+		}
+})
+
+require('litee.calltree').setup({})
+
+vim.lsp.handlers['callHierarchy/incomingCalls'] = vim.lsp.with(
+            require('litee.lsp.handlers').ch_lsp_handler("from"), {}
+	    )
+	    vim.lsp.handlers['callHierarchy/outgoingCalls'] = vim.lsp.with(
+	                require('litee.lsp.handlers').ch_lsp_handler("to"), {}
+	)
 
 local cmp = require'cmp'
 

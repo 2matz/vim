@@ -35,6 +35,10 @@ call quickui#menu#install('&Find', [
 	\ [ "&Symbol\ts ...", 'Telescope lsp_dynamic_workspace_symbols' ],
 \])
 
+call quickui#menu#install('&Edit', [
+	\ [ "&Comment\tc", 'Commentary'],
+\])
+
 call quickui#menu#install('&Goto', [
 	\ [ "&Back\tb", 'bp' ],
 	\ [ "&Current File\t", 'NERDTreeFind' ],
@@ -55,8 +59,8 @@ call quickui#menu#install('&Preview', [
 call quickui#menu#install('&Refactor', [
 	\ [ "&Action\ta", 'lua vim.lsp.buf.code_action()' ],
 	\ [ "&Format\tf", 'lua vim.lsp.buf.format()' ],
+	\ [ "&Suggest\ts", 'lua builtin.spell_suggest' ],
 	\ [ "&Rename\tr", 'lua vim.lsp.buf.rename()' ],
-	\ [ "&Rename\tr", 'lua builtin.spell_suggest' ],
 	\ [ "--", '' ],
 \])
 
@@ -100,6 +104,7 @@ call quickui#menu#install('&View', [
 	\ [ "&Diagnostic\td", 'TroubleToggle'],
 	\ [ "&File\tf", 'NERDTreeToggle' ],
 	\ [ "&Git\tg", 'lua _lazygit_toggle()' ],
+	\ [ "&Project\tp", 'Telescope project' ],
 	\ [ "&Structure\ts", 'TagbarToggle' ],
 	\ [ "&Terminal\tt", 'ToggleTerm' ],
 	\ [ "--", '' ],

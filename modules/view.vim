@@ -14,6 +14,9 @@ let g:airline#extensions#nvimlsp#enabled = 1
 
 let g:airline#extensions#lsp#enabled = 1
 
+" 自动切换目录
+let g:NERDTreeChDirMode = 2
+autocmd BufEnter * lcd %:p:h
 " 美化自动填充
 lua <<EOF
 
