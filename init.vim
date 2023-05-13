@@ -16,6 +16,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
     Plug 'hrsh7th/nvim-cmp'
+    Plug 'onsails/lspkind.nvim'
 
 
     " 检测/调试
@@ -24,8 +25,9 @@ call plug#begin('~/.vim/plugged')
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'leoluz/nvim-dap-go'
-    Plug 'ggandor/leap.nvim'
     Plug 'tpope/vim-surround'
+    Plug 'nvim-telescope/telescope-dap.nvim'
+    Plug 'theHamsta/nvim-dap-virtual-text'
    
 
     " 语法高亮
@@ -47,6 +49,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary' " 注释
     Plug 'ldelossa/litee.nvim' " 调用栈
     Plug 'ldelossa/litee-calltree.nvim'
+    Plug 'jackMort/ChatGPT.nvim'
+
+    " 跳转
+    Plug 'ggandor/leap.nvim'
+
 
     " 标签栏
     Plug 'akinsho/bufferline.nvim'
@@ -57,10 +64,17 @@ call plug#begin('~/.vim/plugged')
     " 终端
     Plug 'akinsho/toggleterm.nvim'
 
+    " Git
+    Plug 'tpope/vim-fugitive'
+    Plug 'tanvirtin/vgit.nvim'
+
     " 文件管理
     Plug 'preservim/nerdtree'
     " 项目管理
     Plug 'nvim-telescope/telescope-project.nvim'
+
+    " 会话管理
+    Plug 'jedrzejboczar/possession.nvim'
 
 
     " 主题/图标
@@ -68,22 +82,38 @@ call plug#begin('~/.vim/plugged')
     Plug 'ryanoasis/vim-devicons'
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/tokyonight.nvim'
+    Plug 'MunifTanjim/nui.nvim'
 
 call plug#end()
 " 基础设置
 set encoding=utf-8
 let g:netrw_keepdir= 0
 
-require('leap').add_default_mappings()
+" Leap
+lua require('leap').add_default_mappings()
 
 " 【Mason】
 lua require("mason").setup()
 lua require("mason-nvim-dap").setup()
 lua require('dap-go').setup()
+lua require("toggleterm").setup()
+lua require("nvim-dap-virtual-text").setup()
+
 
 lua require("telescope").load_extension('project')
+lua require('telescope').load_extension('dap')
+lua require('telescope').load_extension('possession')
 
 lua <<EOF
+require('possession').setup {  
+   autosave = {
+        current = true,
+        tmp = true,
+        tmp_name = 'tmp',
+        on_load = true,
+        on_quit = true,
+    },
+}
 require('telescope').setup{
     defaults = {
       previewer = true,
@@ -104,6 +134,18 @@ require('telescope').setup{
         }
       }
   }
+
+require("chatgpt").setup({
+    api_key_cmd = "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"
+})
+
+vim.o.updatetime = 300
+vim.o.incsearch = false
+vim.wo.signcolumn = 'yes'
+
+require('vgit').setup()
+
+
 require("which-key").setup {
     
 }
@@ -128,7 +170,6 @@ vim.lsp.handlers['callHierarchy/incomingCalls'] = vim.lsp.with(
 	)
 
 local cmp = require'cmp'
-
   cmp.setup({
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -145,6 +186,16 @@ local cmp = require'cmp'
     })
   })
 
+local lspkind = require('lspkind')
+cmp.setup {
+  formatting = {
+    format = lspkind.cmp_format({
+      mode = 'symbol', 
+      maxwidth = 50, 
+      ellipsis_char = '...',
+    })
+  }
+}
  
 
 
@@ -153,11 +204,17 @@ require'nvim-treesitter.configs'.setup {
   auto_install = true,
   highlight = {
     enable = true
-  }
-}
-
-require("toggleterm").setup {
-    
+  },
+  incremental_selection = {
+        enable = true,
+        keymaps = {
+            init_selection = '<CR>',
+            node_incremental = '<CR>',
+            node_decremental = '<BS>',
+            scope_incremental = '<TAB>'
+        }
+    }
+   
 }
 
 

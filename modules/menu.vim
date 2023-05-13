@@ -67,16 +67,23 @@ call quickui#menu#install('&Refactor', [
 
 
 call quickui#menu#install('&Debug', [
-  \ [ "&Begin", 'lua require("dapui").open()' ],
-	\ [ "&Continue\tF5", 'lua require("dap").continue()' ],
-	\ [ "&Restart\tF4", 'VimspectorRestart' ],
-	\ [ "&Stop\tF3", 'VimspectorStop' ],
+  \ [ "Commands\tF1", "lua require'telescope'.extensions.dap.commands{}"],
+  \ [ "--", '' ],
+  \ [ "&All Breakpoint\tF4", "lua require'dap'.list_breakpoints()"],
+  \ [ "&Breakpoint\tF3", "DapToggleBreakpoint"],
+  \ [ "&Clear Breakpoint\tCtrl+F3", "lua require'dap'.clear_breakpoints()"],
 	\ [ "--", '' ],
-	\ [ "Step&Over\tF10", 'VimspectorStepOver' ],
-	\ [ "Step&Into\tF11", 'VimspectorStepInto' ],
-	\ [ "Step&Out\tF12", 'VimspectorStepOut' ],
+	\ [ "&Run\tF5", 'DapContinue' ],
+	\ [ "&Restart\tCtrl+F5", "lua require'dap'.restart()"],
+	\ [ "&Stop\tF12", 'DapTerminate' ],
 	\ [ "--", '' ],
-	\ [ "Reset", 'VimspectorReset' ],
+	\ [ "Step&Into\tF7", 'DapStepInto' ],
+	\ [ "Step&Over\tF8", 'DapStepOver' ],
+	\ [ "Step&Out\tF9", 'DapStepOut' ],
+	\ [ "--", '' ],
+	\ [ "Inspecting", 'DapToggleRepl' ],
+	\ [ "Variables", "lua require'telescope'.extensions.dap.variables{}" ],
+	\ [ "Frames", "lua require'telescope'.extensions.dap.frames{}" ],
 \])
 
 call quickui#menu#install('G&it', [

@@ -6,6 +6,8 @@ set guifont="FiraCode Nerd Font Mono:h11:w57"
 let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
+
+
 autocmd VimEnter * NERDTree
 " 自动在预览窗口显示行数
 autocmd User TelescopePreviewerLoaded setlocal number
@@ -13,6 +15,9 @@ autocmd User TelescopePreviewerLoaded setlocal number
 let g:airline#extensions#nvimlsp#enabled = 1
 
 let g:airline#extensions#lsp#enabled = 1
+
+" 自动高亮
+autocmd BufEnter * TSBufToggle highlight
 
 " 自动切换目录
 let g:NERDTreeChDirMode = 2
