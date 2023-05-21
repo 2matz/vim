@@ -1,15 +1,3 @@
-let g:vimspector_enable_mappings = 'HUMAN'
- \ [ "&All Breakpoint\tF4", "lua require'dap'.list_breakpoints()"],
-  \ [ "&Breakpoint\tF3", "DapToggleBreakpoint"],
-  \ [ "&Clear Breakpoint\tCtrl+F3", "lua require'dap'.clear_breakpoints()"],
-	\ [ "--", '' ],
-	\ [ "&Run\tF5", 'DapContinue' ],
-	\ [ "&Restart\tCtrl+F5", "lua require'dap'.restart()"],
-	\ [ "&Stop\tF12", 'DapTerminate' ],
-	\ [ "--", '' ],
-	\ [ "Step&Into\tF7", 'DapStepInto' ],
-	\ [ "Step&Over\tF8", 'DapStepOver' ],
-	\ [ "Step&Out\tF9", 'DapStepOut' ],
 
 lua <<EOF
  vim.keymap.set('n', '<F1>', function() require'telescope'.extensions.dap.commands{} end)

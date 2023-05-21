@@ -1,3 +1,9 @@
+function! UpdateRemotePlugins(...)
+    " Needed to refresh runtime files
+    let &rtp=&rtp
+    UpdateRemotePlugins
+endfunction
+
 " 【加载插件】
 call plug#begin('~/.vim/plugged')
     Plug 'skywind3000/vim-quickui' " UI
@@ -13,10 +19,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'neovim/nvim-lspconfig'         " LSP配置
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'jose-elias-alvarez/null-ls.nvim'
+    Plug 'hrsh7th/nvim-cmp'
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/nvim-cmp'
-    Plug 'onsails/lspkind.nvim'
+    Plug 'j-hui/fidget.nvim'
+    Plug 'Wansmer/treesj'
 
 
     " 检测/调试
@@ -36,6 +43,7 @@ call plug#begin('~/.vim/plugged')
     " 自动补全
 
     Plug 'LunarWatcher/auto-pairs'
+    Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
     " 增强
     Plug 'airblade/vim-rooter'           " 自动切换工作目录
@@ -47,9 +55,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar' " 代码结构
     Plug 'lukas-reineke/indent-blankline.nvim' " 高亮空白符
     Plug 'tpope/vim-commentary' " 注释
-    Plug 'ldelossa/litee.nvim' " 调用栈
-    Plug 'ldelossa/litee-calltree.nvim'
     Plug 'jackMort/ChatGPT.nvim'
+    Plug 'nacro90/numb.nvim'
+    Plug 'andymass/vim-matchup'
+
+
 
     " 跳转
     Plug 'ggandor/leap.nvim'
@@ -70,11 +80,14 @@ call plug#begin('~/.vim/plugged')
 
     " 文件管理
     Plug 'preservim/nerdtree'
+    Plug 'nvim-telescope/telescope-file-browser.nvim'
+
     " 项目管理
     Plug 'nvim-telescope/telescope-project.nvim'
 
     " 会话管理
     Plug 'jedrzejboczar/possession.nvim'
+    Plug 'ethanholz/nvim-lastplace'
 
 
     " 主题/图标
@@ -84,13 +97,29 @@ call plug#begin('~/.vim/plugged')
     Plug 'folke/tokyonight.nvim'
     Plug 'MunifTanjim/nui.nvim'
 
+    " 通知
+    Plug 'rcarriga/nvim-notify'
+
 call plug#end()
 " 基础设置
 set encoding=utf-8
+set termencoding=utf-8
+set fileencodings=utf8,ucs-bom,gbk,cp936,gb2312,gb18030
 let g:netrw_keepdir= 0
+
 
 " Leap
 lua require('leap').add_default_mappings()
+
+" Wilder
+call wilder#setup({'modes': [':', '/', '?']})
+call wilder#set_option('renderer', wilder#wildmenu_renderer(
+      \ wilder#wildmenu_airline_theme({
+      \   'highlights': {},
+      \   'highlighter': wilder#basic_highlighter(),
+      \   'separator': ' · ',
+      \ })))
+
 
 " 【Mason】
 lua require("mason").setup()
@@ -98,13 +127,20 @@ lua require("mason-nvim-dap").setup()
 lua require('dap-go').setup()
 lua require("toggleterm").setup()
 lua require("nvim-dap-virtual-text").setup()
-
+lua require("fidget").setup()
+lua require('numb').setup()
+lua require('treesj').setup()
 
 lua require("telescope").load_extension('project')
 lua require('telescope').load_extension('dap')
 lua require('telescope').load_extension('possession')
+lua require("telescope").load_extension('file_browser')
 
 lua <<EOF
+require'nvim-lastplace'.setup{}
+
+
+
 require('possession').setup {  
    autosave = {
         current = true,
@@ -128,6 +164,12 @@ require('telescope').setup{
         } 
       }
     },
+    extensions = {
+        file_browser = {
+          theme = "ivy",
+          hijack_netrw = true,
+        },
+      },
     pickers = {
         colorscheme = {
           enable_preview = true
@@ -150,57 +192,33 @@ require("which-key").setup {
     
 }
 
-require('litee.lib').setup({
-    	tree = {
-		icon_set = "codicons"
-	},
-	panel = {
-		orientation = "left",
-			panel_size  = 30
-		}
-})
 
-require('litee.calltree').setup({})
-
-vim.lsp.handlers['callHierarchy/incomingCalls'] = vim.lsp.with(
-            require('litee.lsp.handlers').ch_lsp_handler("from"), {}
-	    )
-	    vim.lsp.handlers['callHierarchy/outgoingCalls'] = vim.lsp.with(
-	                require('litee.lsp.handlers').ch_lsp_handler("to"), {}
-	)
 
 local cmp = require'cmp'
+
   cmp.setup({
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
       ['<C-Space>'] = cmp.mapping.complete(),
       ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-     
     }, {
       { name = 'buffer' },
     })
   })
 
-local lspkind = require('lspkind')
-cmp.setup {
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol', 
-      maxwidth = 50, 
-      ellipsis_char = '...',
-    })
-  }
-}
  
 
 
 require'nvim-treesitter.configs'.setup {
   ensure_installed = { "go" },
+  matchup = {
+    enable = true,
+  },
   auto_install = true,
   highlight = {
     enable = true

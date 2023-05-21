@@ -7,8 +7,12 @@ let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 
-
+" 自动打开文件树
 autocmd VimEnter * NERDTree
+
+" 自动激活第2个窗口
+autocmd VimEnter * wincmd w
+
 " 自动在预览窗口显示行数
 autocmd User TelescopePreviewerLoaded setlocal number
 
@@ -17,12 +21,16 @@ let g:airline#extensions#nvimlsp#enabled = 1
 let g:airline#extensions#lsp#enabled = 1
 
 " 自动高亮
-autocmd BufEnter * TSBufToggle highlight
+autocmd FileType  * TSBufToggle highlight
 
 " 自动切换目录
 let g:NERDTreeChDirMode = 2
 autocmd BufEnter * lcd %:p:h
 " 美化自动填充
+
+" 高亮LSP状态
+highlight FidgetTitle ctermfg=white guifg=#ff3e00
+
 lua <<EOF
 
 EOF
