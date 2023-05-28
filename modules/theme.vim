@@ -22,8 +22,9 @@ set background=dark
 " 主题
 colorscheme tokyonight-moon
 
+
 " 状态栏主题
-"let g:airline_theme='tokyonight-moon'
+"let g:airline_theme='cobalt2'
 
 " 菜单栏主题
 let g:quickui_color_scheme = 'solarized'

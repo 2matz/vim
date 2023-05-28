@@ -37,6 +37,7 @@ call quickui#menu#install('&Find', [
 
 call quickui#menu#install('&Edit', [
 	\ [ "&Comment\tc", 'Commentary'],
+	\ [ "&Split/join\ts", 'TSJToggle'],
 \])
 
 call quickui#menu#install('&Goto', [
@@ -108,7 +109,8 @@ call quickui#menu#install('&Tools', [
 
 call quickui#menu#install('&View', [
 	\ [ "&Breakpoints\tb", 'VimspectorBreakpoints'],
-	\ [ "&Diagnostic\td", 'TroubleToggle'],
+	\ [ "&Database\td", 'DBUIToggle'],
+	\ [ "&Error\te", 'TroubleToggle'],
 	\ [ "&File\tf", 'NERDTreeToggle' ],
 	\ [ "&Git\tg", 'lua _lazygit_toggle()' ],
 	\ [ "&Project\tp", 'Telescope project' ],

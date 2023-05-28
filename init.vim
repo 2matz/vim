@@ -41,7 +41,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
     " 自动补全
-
+    
     Plug 'LunarWatcher/auto-pairs'
     Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
@@ -52,7 +52,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'RRethy/vim-illuminate' " 当前高亮
     Plug 'sudormrfbin/cheatsheet.nvim' " 备忘录
     Plug 'folke/which-key.nvim' " 按键
-    Plug 'majutsushi/tagbar' " 代码结构
+    Plug 'majutsushi/tagbar'
     Plug 'lukas-reineke/indent-blankline.nvim' " 高亮空白符
     Plug 'tpope/vim-commentary' " 注释
     Plug 'jackMort/ChatGPT.nvim'
@@ -70,6 +70,7 @@ call plug#begin('~/.vim/plugged')
 
     " 状态栏
     Plug 'vim-airline/vim-airline'
+    Plug 'vim-airline/vim-airline-themes'
 
     " 终端
     Plug 'akinsho/toggleterm.nvim'
@@ -89,6 +90,14 @@ call plug#begin('~/.vim/plugged')
     Plug 'jedrzejboczar/possession.nvim'
     Plug 'ethanholz/nvim-lastplace'
 
+    " 数据库
+    Plug 'tpope/vim-dadbod'
+    Plug 'kristijanhusak/vim-dadbod-ui'
+    Plug 'kristijanhusak/vim-dadbod-completion'
+
+    " 代码片段
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'saadparwaiz1/cmp_luasnip'
 
     " 主题/图标
     Plug 'themercorp/themer.lua' " 主题管理器
@@ -96,6 +105,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'kyazdani42/nvim-web-devicons'
     Plug 'folke/tokyonight.nvim'
     Plug 'MunifTanjim/nui.nvim'
+    Plug 'nvim-telescope/telescope-ui-select.nvim'
+    Plug 'camspiers/lens.vim'
 
     " 通知
     Plug 'rcarriga/nvim-notify'
@@ -129,16 +140,21 @@ lua require("toggleterm").setup()
 lua require("nvim-dap-virtual-text").setup()
 lua require("fidget").setup()
 lua require('numb').setup()
-lua require('treesj').setup()
+
 
 lua require("telescope").load_extension('project')
 lua require('telescope').load_extension('dap')
 lua require('telescope').load_extension('possession')
 lua require("telescope").load_extension('file_browser')
+lua require("telescope").load_extension("ui-select")
 
 lua <<EOF
 require'nvim-lastplace'.setup{}
 
+
+require('treesj').setup {
+    max_join_length = 500
+}
 
 
 require('possession').setup {  
@@ -169,7 +185,11 @@ require('telescope').setup{
           theme = "ivy",
           hijack_netrw = true,
         },
-      },
+        ["ui-select"] = {
+            require("telescope.themes").get_dropdown {
+            }
+        },
+    },
     pickers = {
         colorscheme = {
           enable_preview = true
@@ -204,8 +224,14 @@ local cmp = require'cmp'
       ['<C-e>'] = cmp.mapping.abort(),
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
     }),
+    snippet = {
+      expand = function(args)
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      end,
+    },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
+      { name = 'luasnip' },
     }, {
       { name = 'buffer' },
     })
