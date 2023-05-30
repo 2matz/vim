@@ -1,6 +1,6 @@
 " 保存文件后自动格式化
 " autocmd BufEnter *.go set updatetime=750
-" autocmd BufWritePre *.go silent! :AsyncRun -post=e go fmt %
+autocmd BufWritePre *.go silent! :AsyncRun -post=e go fmt %
 " autocmd CursorHoldI *.go lua vim.lsp.buf.hover()
 
 

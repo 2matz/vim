@@ -83,12 +83,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'preservim/nerdtree'
     Plug 'nvim-telescope/telescope-file-browser.nvim'
 
-    " 项目管理
-    Plug 'nvim-telescope/telescope-project.nvim'
 
     " 会话管理
-    Plug 'jedrzejboczar/possession.nvim'
+    Plug 'rmagatti/auto-session'
     Plug 'ethanholz/nvim-lastplace'
+    Plug 'Weissle/persistent-breakpoints.nvim'
 
     " 数据库
     Plug 'tpope/vim-dadbod'
@@ -140,13 +139,15 @@ lua require("toggleterm").setup()
 lua require("nvim-dap-virtual-text").setup()
 lua require("fidget").setup()
 lua require('numb').setup()
+lua require("dapui").setup()
 
 
-lua require("telescope").load_extension('project')
+
 lua require('telescope').load_extension('dap')
-lua require('telescope').load_extension('possession')
 lua require("telescope").load_extension('file_browser')
 lua require("telescope").load_extension("ui-select")
+lua require("telescope").load_extension("session-lens")
+
 
 lua <<EOF
 require'nvim-lastplace'.setup{}
@@ -156,16 +157,18 @@ require('treesj').setup {
     max_join_length = 500
 }
 
-
-require('possession').setup {  
-   autosave = {
-        current = true,
-        tmp = true,
-        tmp_name = 'tmp',
-        on_load = true,
-        on_quit = true,
-    },
+require('persistent-breakpoints').setup {
+    load_breakpoints_event = { "BufReadPost" }
 }
+
+require('auto-session').setup {
+    session_lens = {
+        load_on_setup = true,
+        theme_conf = { border = true },
+        previewer = false,
+    }
+}
+
 require('telescope').setup{
     defaults = {
       previewer = true,
@@ -226,7 +229,7 @@ local cmp = require'cmp'
     }),
     snippet = {
       expand = function(args)
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        require('luasnip').lsp_expand(args.body)
       end,
     },
     sources = cmp.config.sources({

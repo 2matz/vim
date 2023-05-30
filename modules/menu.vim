@@ -71,7 +71,7 @@ call quickui#menu#install('&Debug', [
   \ [ "Commands\tF1", "lua require'telescope'.extensions.dap.commands{}"],
   \ [ "--", '' ],
   \ [ "&All Breakpoint\tF4", "lua require'dap'.list_breakpoints()"],
-  \ [ "&Breakpoint\tF3", "DapToggleBreakpoint"],
+  \ [ "&Breakpoint\tF3", "PBToggleBreakpoint"],
   \ [ "&Clear Breakpoint\tCtrl+F3", "lua require'dap'.clear_breakpoints()"],
 	\ [ "--", '' ],
 	\ [ "&Run\tF5", 'DapContinue' ],
@@ -108,12 +108,12 @@ call quickui#menu#install('&Tools', [
 \])
 
 call quickui#menu#install('&View', [
-	\ [ "&Breakpoints\tb", 'VimspectorBreakpoints'],
+  \ [ "De&bug\tb", 'lua require("dapui").toggle()'],
 	\ [ "&Database\td", 'DBUIToggle'],
 	\ [ "&Error\te", 'TroubleToggle'],
 	\ [ "&File\tf", 'NERDTreeToggle' ],
 	\ [ "&Git\tg", 'lua _lazygit_toggle()' ],
-	\ [ "&Project\tp", 'Telescope project' ],
+	\ [ "&Project\tp", 'Telescope session-lens search_session' ],
 	\ [ "&Structure\ts", 'TagbarToggle' ],
 	\ [ "&Terminal\tt", 'ToggleTerm' ],
 	\ [ "--", '' ],

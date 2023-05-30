@@ -7,11 +7,6 @@ let &t_SI.="\e[5 q"
 let &t_SR.="\e[4 q"
 let &t_EI.="\e[1 q"
 
-" 插入模式闪烁光标
-let g:airline#extensions#cursorline#enabled = 1
-let g:airline#extensions#cursorcolumn#enabled = 1
-let g:airline#extensions#cursorline#blink = 1
-let g:airline#extensions#cursorcolumn#blink = 1
 
 " 自动打开文件树
 autocmd VimEnter * NERDTree
@@ -45,7 +40,6 @@ EOF
 " 高亮空白符
 lua <<EOF
 require("indent_blankline").setup {
-    -- for example, context is off by default, use this to turn it on
     show_current_context = true,
     show_current_context_start = true,
 }
