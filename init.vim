@@ -24,6 +24,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'hrsh7th/cmp-buffer'
     Plug 'j-hui/fidget.nvim'
     Plug 'Wansmer/treesj'
+    Plug 'ray-x/lsp_signature.nvim'
+
 
 
     " 检测/调试
@@ -32,7 +34,6 @@ call plug#begin('~/.vim/plugged')
     Plug 'jay-babu/mason-nvim-dap.nvim'
     Plug 'rcarriga/nvim-dap-ui'
     Plug 'leoluz/nvim-dap-go'
-    Plug 'tpope/vim-surround'
     Plug 'nvim-telescope/telescope-dap.nvim'
     Plug 'theHamsta/nvim-dap-virtual-text'
    
@@ -42,10 +43,13 @@ call plug#begin('~/.vim/plugged')
 
     " 自动补全
     
-    Plug 'LunarWatcher/auto-pairs'
+    Plug 'LunarWatcher/auto-pairs' " 自动配对
     Plug 'gelguy/wilder.nvim', { 'do': function('UpdateRemotePlugins') }
 
     " 增强
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-repeat'
+
     Plug 'airblade/vim-rooter'           " 自动切换工作目录
     Plug 'skywind3000/asyncrun.vim'      " 异步任务
     Plug 'lewis6991/gitsigns.nvim'       " Git
@@ -97,6 +101,8 @@ call plug#begin('~/.vim/plugged')
     " 代码片段
     Plug 'L3MON4D3/LuaSnip'
     Plug 'saadparwaiz1/cmp_luasnip'
+    Plug 'rafamadriz/friendly-snippets'
+    Plug 'benfowler/telescope-luasnip.nvim'
 
     " 主题/图标
     Plug 'themercorp/themer.lua' " 主题管理器
@@ -143,10 +149,12 @@ lua require("dapui").setup()
 
 
 
+
 lua require('telescope').load_extension('dap')
 lua require("telescope").load_extension('file_browser')
 lua require("telescope").load_extension("ui-select")
 lua require("telescope").load_extension("session-lens")
+lua require('telescope').load_extension('luasnip')
 
 
 lua <<EOF
@@ -215,7 +223,7 @@ require("which-key").setup {
     
 }
 
-
+require("luasnip/loaders/from_vscode").lazy_load()
 
 local cmp = require'cmp'
 
@@ -237,7 +245,7 @@ local cmp = require'cmp'
       { name = 'luasnip' },
     }, {
       { name = 'buffer' },
-    })
+    }),
   })
 
  
@@ -269,6 +277,7 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
     sources = {
+        null_ls.builtins.formatting.prettier,
         null_ls.builtins.formatting.stylua,
         null_ls.builtins.diagnostics.eslint,
         null_ls.builtins.completion.spell,

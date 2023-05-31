@@ -55,6 +55,7 @@ call quickui#menu#install('&Goto', [
 call quickui#menu#install('&Preview', [
 	\ [ "&Cursor\tc", 'lua vim.lsp.buf.hover()' ],
 	\ [ "&Definition\td", 'lua require "telescope.builtin".lsp_definitions { jump_type = "never" }' ],
+	\ [ "&Signature\ts", "lua require('lsp_signature').toggle_float_win()" ],
 \])
 
 call quickui#menu#install('&Refactor', [

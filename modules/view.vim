@@ -73,3 +73,16 @@ require('illuminate').configure({
     min_count_to_highlight = 1,
 })
 EOF
+
+lua <<EOF
+require "lsp_signature".setup({
+    bind = true,
+    close_timeout  = 4000,
+    hint_enable = true, 
+    always_trigger = true,
+    floating_window = true,
+    handler_opts = {
+      border = "single"
+    }
+  })
+EOF
