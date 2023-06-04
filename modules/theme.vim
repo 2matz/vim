@@ -17,14 +17,20 @@ syntax on
 " 最大颜色
 set t_Co=256
 
+set termguicolors
+
 set background=dark
 
+"let g:material_theme_style = 'palenight'
+
+
 " 主题
-colorscheme tokyonight-moon
+colorscheme equinusocio_material  " material | tokyonight-moon
+
 
 
 " 状态栏主题
-"let g:airline_theme='cobalt2'
+"let g:airline_theme= 'equinusocio_material' " |'cobalt2'
 
 " 菜单栏主题
 let g:quickui_color_scheme = 'solarized'

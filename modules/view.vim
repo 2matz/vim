@@ -48,6 +48,8 @@ EOF
 " 数据库图标
 let g:db_ui_use_nerd_fonts=1
 
+lua require'marks'.setup()
+
 " 高亮当前
 lua <<EOF
 require('illuminate').configure({
@@ -85,4 +87,24 @@ require "lsp_signature".setup({
       border = "single"
     }
   })
+EOF
+
+lua <<EOF
+require("trouble").setup {
+ icons = true,
+  auto_open = false,
+  auto_close = true
+}
+
+local signs = {
+    Error = " ",
+    Warning = " ",
+    Hint = " ",
+    Information = " "
+}
+
+for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, {text = icon, texthl = hl, numhl = hl})
+end
 EOF

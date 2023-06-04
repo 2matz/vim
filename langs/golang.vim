@@ -8,7 +8,7 @@ autocmd BufWritePre *.go silent! :AsyncRun -post=e go fmt %
 lua <<EOF
 
 local on_attach = function(client)
-   require("notify")("LSP解析完成")
+   -- require("notify")("LSP解析完成")
 end
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities()

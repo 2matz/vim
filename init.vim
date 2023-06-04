@@ -14,17 +14,16 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/popup.nvim'
     Plug 'nvim-lua/plenary.nvim'         " telescope依赖项
 
-    " LSP相关
     Plug 'williamboman/mason.nvim' , {'do': ':MasonInstall gopls' }      " LSP、DAP
     Plug 'neovim/nvim-lspconfig'         " LSP配置
     Plug 'williamboman/mason-lspconfig.nvim'
     Plug 'jose-elias-alvarez/null-ls.nvim'
-    Plug 'hrsh7th/nvim-cmp'
+    Plug 'hrsh7th/nvim-cmp' " 自动填充
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
-    Plug 'j-hui/fidget.nvim'
-    Plug 'Wansmer/treesj'
-    Plug 'ray-x/lsp_signature.nvim'
+    Plug 'j-hui/fidget.nvim' " LSP状态
+    Plug 'Wansmer/treesj' " 折叠
+    Plug 'ray-x/lsp_signature.nvim' " LSP符号
 
 
 
@@ -32,10 +31,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'folke/trouble.nvim'
     Plug 'mfussenegger/nvim-dap'
     Plug 'jay-babu/mason-nvim-dap.nvim'
-    Plug 'rcarriga/nvim-dap-ui'
-    Plug 'leoluz/nvim-dap-go'
+    Plug 'rcarriga/nvim-dap-ui' " DAP UI
+    Plug 'leoluz/nvim-dap-go' " DAP go
     Plug 'nvim-telescope/telescope-dap.nvim'
-    Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'theHamsta/nvim-dap-virtual-text' " DAP显示变量的值
+    Plug 'folke/lsp-colors.nvim' " 错误、警告高亮
    
 
     " 语法高亮
@@ -62,6 +62,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'jackMort/ChatGPT.nvim'
     Plug 'nacro90/numb.nvim'
     Plug 'andymass/vim-matchup'
+    Plug 'mg979/vim-visual-multi' " 多行选择
 
 
 
@@ -71,6 +72,7 @@ call plug#begin('~/.vim/plugged')
 
     " 标签栏
     Plug 'akinsho/bufferline.nvim'
+    Plug 'chentoast/marks.nvim' " 标记
 
     " 状态栏
     Plug 'vim-airline/vim-airline'
@@ -112,6 +114,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'MunifTanjim/nui.nvim'
     Plug 'nvim-telescope/telescope-ui-select.nvim'
     Plug 'camspiers/lens.vim'
+    Plug 'kaicataldo/material.vim'
+    Plug 'yunlingz/equinusocio-material.vim'
 
     " 通知
     Plug 'rcarriga/nvim-notify'

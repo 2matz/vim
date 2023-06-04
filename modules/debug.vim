@@ -5,12 +5,12 @@ dap.listeners.after.event_initialized["dapui_config"] = function()
   dapui.open()
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
+    dap.repl.close()
   dapui.close()
-  dap.repl.close()
 end
 dap.listeners.before.event_exited["dapui_config"] = function()
-  dapui.close()
   dap.repl.close()
+  dapui.close()
 end
 
  vim.keymap.set('n', '<F1>', function() require'telescope'.extensions.dap.commands{} end)
