@@ -52,6 +52,7 @@ call plug#begin('~/.vim/plugged')
 
     Plug 'airblade/vim-rooter'           " 自动切换工作目录
     Plug 'skywind3000/asyncrun.vim'      " 异步任务
+    Plug 'skywind3000/asynctasks.vim'    " 任务管理
     Plug 'lewis6991/gitsigns.nvim'       " Git
     Plug 'RRethy/vim-illuminate' " 当前高亮
     Plug 'sudormrfbin/cheatsheet.nvim' " 备忘录
@@ -63,6 +64,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'nacro90/numb.nvim'
     Plug 'andymass/vim-matchup'
     Plug 'mg979/vim-visual-multi' " 多行选择
+    Plug 'junegunn/vim-easy-align' " 对齐
 
 
 
@@ -116,6 +118,8 @@ call plug#begin('~/.vim/plugged')
     Plug 'camspiers/lens.vim'
     Plug 'kaicataldo/material.vim'
     Plug 'yunlingz/equinusocio-material.vim'
+    Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+    Plug 'sonph/onehalf', { 'rtp': 'vim' }
 
     " 通知
     Plug 'rcarriga/nvim-notify'
@@ -213,7 +217,7 @@ require('telescope').setup{
   }
 
 require("chatgpt").setup({
-    api_key_cmd = "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"
+    api_key_cmd = "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"
 })
 
 vim.o.updatetime = 300

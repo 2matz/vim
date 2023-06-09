@@ -19,13 +19,18 @@ set t_Co=256
 
 set termguicolors
 
-set background=dark
+" 背景
+set background=none
+set bgimage=./other/background/1.jpg
+"set background=dark
 
 "let g:material_theme_style = 'palenight'
 
+lua require("catppuccin").setup()
+
 
 " 主题
-colorscheme equinusocio_material  " material | tokyonight-moon
+colorscheme equinusocio_material   " material | tokyonight-moon | catppuccin | equinusocio_material | catppuccin-latte 
 
 
 
@@ -33,8 +38,9 @@ colorscheme equinusocio_material  " material | tokyonight-moon
 "let g:airline_theme= 'equinusocio_material' " |'cobalt2'
 
 " 菜单栏主题
-let g:quickui_color_scheme = 'solarized'
+let g:quickui_color_scheme = 'onehalflight'
 
 " 分割线
 set fillchars=vert:\ 
 hi! VertSplit guifg=lightblue guibg=lightblue ctermfg=lightblue ctermbg=lightblue
+
