@@ -6,5 +6,3 @@ require("bufferline").setup {
 	}
 }
 EOF
-nmap <silent><C-PageUp> :bprevious<CR>
-nmap <silent><C-PageDown> :bnext<CR>

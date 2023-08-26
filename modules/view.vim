@@ -1,5 +1,7 @@
 " 设置字体
-set guifont="FiraCode Nerd Font Mono:h11:w57"
+
+set guifont="Cascadia Mono SemiBold:h12:sb"
+" set guifont="IntelOne Mono:h12:b"
 
 "let g:netrw_winsize = 20
 " 更改光标样式
@@ -48,7 +50,6 @@ EOF
 " 数据库图标
 let g:db_ui_use_nerd_fonts=1
 
-lua require'marks'.setup()
 
 " 高亮当前
 lua <<EOF

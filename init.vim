@@ -21,7 +21,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'hrsh7th/nvim-cmp' " 自动填充
     Plug 'hrsh7th/cmp-nvim-lsp'
     Plug 'hrsh7th/cmp-buffer'
-    Plug 'j-hui/fidget.nvim' " LSP状态
+    Plug 'j-hui/fidget.nvim', { 'tag': 'legacy' } " LSP状态
     Plug 'Wansmer/treesj' " 折叠
     Plug 'ray-x/lsp_signature.nvim' " LSP符号
 
@@ -60,11 +60,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'majutsushi/tagbar'
     Plug 'lukas-reineke/indent-blankline.nvim' " 高亮空白符
     Plug 'tpope/vim-commentary' " 注释
-    Plug 'jackMort/ChatGPT.nvim'
     Plug 'nacro90/numb.nvim'
     Plug 'andymass/vim-matchup'
     Plug 'mg979/vim-visual-multi' " 多行选择
     Plug 'junegunn/vim-easy-align' " 对齐
+    Plug 'nanozuki/tabby.nvim'
 
 
 
@@ -74,7 +74,8 @@ call plug#begin('~/.vim/plugged')
 
     " 标签栏
     Plug 'akinsho/bufferline.nvim'
-    Plug 'chentoast/marks.nvim' " 标记
+    Plug 'MattesGroeger/vim-bookmarks'
+    Plug 'tom-anders/telescope-vim-bookmarks.nvim'
 
     " 状态栏
     Plug 'vim-airline/vim-airline'
@@ -85,7 +86,6 @@ call plug#begin('~/.vim/plugged')
 
     " Git
     Plug 'tpope/vim-fugitive'
-    Plug 'tanvirtin/vgit.nvim'
 
     " 文件管理
     Plug 'preservim/nerdtree'
@@ -120,6 +120,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'yunlingz/equinusocio-material.vim'
     Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
     Plug 'sonph/onehalf', { 'rtp': 'vim' }
+    Plug 'Yazeed1s/oh-lucy.nvim'
 
     " 通知
     Plug 'rcarriga/nvim-notify'
@@ -156,13 +157,12 @@ lua require('numb').setup()
 lua require("dapui").setup()
 
 
-
-
 lua require('telescope').load_extension('dap')
 lua require("telescope").load_extension('file_browser')
 lua require("telescope").load_extension("ui-select")
 lua require("telescope").load_extension("session-lens")
 lua require('telescope').load_extension('luasnip')
+lua require('telescope').load_extension('vim_bookmarks')
 
 
 lua <<EOF
@@ -216,15 +216,11 @@ require('telescope').setup{
       }
   }
 
-require("chatgpt").setup({
-    api_key_cmd = "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"
-})
 
 vim.o.updatetime = 300
 vim.o.incsearch = false
 vim.wo.signcolumn = 'yes'
 
-require('vgit').setup()
 
 
 require("which-key").setup {
@@ -252,8 +248,8 @@ local cmp = require'cmp'
       { name = 'nvim_lsp' },
       { name = 'luasnip' },
     }, {
-      { name = 'buffer' },
-    }),
+      { name = 'buffer' }
+    })
   })
 
  
@@ -275,7 +271,14 @@ require'nvim-treesitter.configs'.setup {
             node_incremental = '<CR>',
             node_decremental = '<BS>',
             scope_incremental = '<TAB>'
-        }
+        },
+        is_supported = function ()
+            local mode = vim.api.nvim_get_mode().mode
+            if mode == "c" then 
+              return false
+            end
+            return true
+        end
     }
    
 }
@@ -292,6 +295,23 @@ null_ls.setup({
     },
 })
 
+require('tabby.tabline').use_preset('active_wins_at_tail', {
+  theme = {
+    fill = 'TabLineFill', -- tabline background
+    head = 'TabLine', -- head element highlight
+    current_tab = 'TabLineSel', -- current tab label highlight
+    tab = 'TabLine', -- other tab label highlight
+    win = 'TabLine', -- window highlight
+    tail = 'TabLine', -- tail element highlight
+  },
+  nerdfont = true, -- whether use nerdfont
+  tab_name = {
+      name_fallback = 'function({tabid}), return a string',
+  },
+  buf_name = {
+      mode = "'unique'|'relative'|'tail'|'shorten'",
+  },
+})
 
 EOF
 

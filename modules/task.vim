@@ -2,5 +2,5 @@
 let g:asyncrun_open = 6
 let g:asynctasks_term_pos = 'bottom'
 let g:asynctasks_extra_config = [
-    \ 'C:/Users/dtkx/AppData/Local/nvim/other/data/tasks.ini',
+    \ 'C:\Users\matz\AppData\Local\nvim\other\data',
     \ ]

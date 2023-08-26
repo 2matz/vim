@@ -20,8 +20,6 @@ set t_Co=256
 set termguicolors
 
 " 背景
-set background=none
-set bgimage=./other/background/1.jpg
 "set background=dark
 
 "let g:material_theme_style = 'palenight'

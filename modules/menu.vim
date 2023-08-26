@@ -45,10 +45,10 @@ call quickui#menu#install('&Goto', [
 	\ [ "&Current File\t", 'NERDTreeFind' ],
 	\ [ "&Definition\td", 'Telescope lsp_definitions' ],
 	\ [ "Diagnostics ...", 'Telescope diagnostics'],
+	\ [ "&reference ...\tr", 'Telescope lsp_references' ],
 	\ [ "Switch File ...", 'Telescope buffers' ],
 	\ [ "&Symbol ...\ts", 'Telescope lsp_document_symbols' ],
 	\ [ "&Type\tt", 'Telescope lsp_type_definitions' ],
-	\ [ "&Usage\tu", 'Telescope lsp_incoming_calls' ],
 	\ [ "--", '' ],
 \])
 
@@ -66,6 +66,10 @@ call quickui#menu#install('&Refactor', [
 	\ [ "--", '' ],
 \])
 
+call quickui#menu#install('&Build', [
+	\ [ "&File\tf", 'AsyncTask file-run' ],
+	\ [ "--", '' ],
+\])
 
 
 call quickui#menu#install('&Debug', [
