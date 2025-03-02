@@ -8,7 +8,7 @@ set modelines=0
 let s:script_dir = expand('<sfile>:p:h')
 
 " 定义要加载的配置列表
-let s:files_to_source = ['basic.vim' ]
+let s:files_to_source = ['basic.vim' , "keys.vim"]
 
 " 循环加载文件
 for file in s:files_to_source
